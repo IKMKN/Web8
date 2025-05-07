@@ -1,0 +1,53 @@
+﻿using Microsoft.EntityFrameworkCore;
+using Web8.Data.Configurations;
+using Web8.Models.Entities;
+
+namespace Web8.Data;
+
+public class AppDbContext : DbContext
+{
+    public DbSet<User> Users { get; set; }
+    public DbSet<UserGroup> UsersGroups { get; set; }
+    public DbSet<UserState> UsersStates { get; set; }
+
+    //public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    {
+        optionsBuilder.UseNpgsql("Host=localhost;Port=5432;Database=Web8Base;Username=postgres;Password=mypassword");
+    }
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        modelBuilder.ApplyConfiguration(new UserConfiguration());
+        modelBuilder.ApplyConfiguration(new UserStateConfiguration());
+        modelBuilder.ApplyConfiguration(new UserGroupConfiguration());
+
+        modelBuilder.Entity<UserGroup>().HasData(
+            new UserGroup
+            {
+                UserGroupId = 1,
+                UserGroupCode = UserGroupCode.Admin,
+                Description = "Administrator"
+            },
+            new UserGroup
+            {
+                UserGroupId = 2,
+                UserGroupCode = UserGroupCode.User,
+                Description = "Average user"
+            });
+
+        modelBuilder.Entity<UserState>().HasData(
+            new UserState
+            {
+                UserStateId = 1,
+                UserStateCode = UserStateCode.Active,
+                Description = "Active account"
+            },
+            new UserState
+            {
+                UserStateId = 2,
+                UserStateCode = UserStateCode.Blocked,
+                Description = "Blocked account"
+            });
+    }
+}
