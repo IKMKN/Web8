@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Web8.Data;
 using Web8.Interfaces;
+using Web8.Models.Entities;
 
 namespace Web8.Services;
 
@@ -21,6 +22,9 @@ public class AuthService : IAuthService
     {
         var user = await context.Users.FirstOrDefaultAsync(u => u.Login == login) 
             ?? throw new KeyNotFoundException("This login not exist!");
+
+        if (user.UserStateId == (int)UserStateCode.Blocked)
+            throw new ArgumentException($"Account {user.Login} is blocked!");
 
         var result = passwordHasher.Verify(password, user.PasswordHash);
 
