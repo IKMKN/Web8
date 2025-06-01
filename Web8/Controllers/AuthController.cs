@@ -18,12 +18,12 @@ public class AuthController : ControllerBase
     }
 
     [HttpPost("login")]
-    public async Task<IResult> Login(LoginUserRequest request)
+    public async Task<IActionResult> Login(LoginUserRequest request)
     {
         var token = await authService.LoginAsync(request.Login, request.Password);
 
         HttpContext.Response.Cookies.Append("secret-cookie", token);
 
-        return Results.Ok("Successful login!");
+        return Ok("Successful login!");
     }
 }

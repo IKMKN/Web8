@@ -8,9 +8,9 @@ public class AuthService : IAuthService
 {
     private readonly AppDbContext context;
     private readonly IPasswordHasher passwordHasher;
-    private readonly IJwtProvider jwtProvider;
+    private readonly IJwtService jwtProvider;
 
-    public AuthService(AppDbContext context, IPasswordHasher passwordHasher, IJwtProvider jwtProvider)
+    public AuthService(AppDbContext context, IPasswordHasher passwordHasher, IJwtService jwtProvider)
     {
         this.context = context;
         this.passwordHasher = passwordHasher;
@@ -19,12 +19,13 @@ public class AuthService : IAuthService
 
     public async Task<string> LoginAsync(string login, string password)
     {
-        var user = await context.Users.FirstOrDefaultAsync(u=> u.Login == login) 
-            ?? throw new Exception("This login not exist!");
+        var user = await context.Users.FirstOrDefaultAsync(u => u.Login == login) 
+            ?? throw new KeyNotFoundException("This login not exist!");
 
         var result = passwordHasher.Verify(password, user.PasswordHash);
-        if (!result)
-            throw new Exception("Incorrect password!");
+
+        if (result is false)
+            throw new ArgumentException("Incorrect password!");
 
         var token = jwtProvider.GenerateToken(user);
         return token;

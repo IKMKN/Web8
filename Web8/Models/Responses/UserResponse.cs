@@ -2,7 +2,7 @@
 
 public class UserResponse
 {
-    public Guid UserId { get; set; }
+    public int UserId { get; set; }
     public string Login { get; set; }
     public DateTime CreatedDate { get; set; }
 

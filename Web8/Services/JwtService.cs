@@ -8,10 +8,10 @@ using Web8.Models.Entities;
 
 namespace Web8.Services;
 
-public class JwtProvider : IJwtProvider
+public class JwtService : IJwtService
 {
     private readonly JwtOptions options;
-    public JwtProvider(IOptions<JwtOptions> options)
+    public JwtService(IOptions<JwtOptions> options)
     {
         this.options = options.Value;
     }

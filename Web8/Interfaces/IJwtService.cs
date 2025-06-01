@@ -2,7 +2,7 @@
 
 namespace Web8.Interfaces
 {
-    public interface IJwtProvider
+    public interface IJwtService
     {
         string GenerateToken(User user);
     }

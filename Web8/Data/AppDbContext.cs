@@ -10,7 +10,7 @@ public class AppDbContext : DbContext
     public DbSet<UserGroup> UsersGroups { get; set; }
     public DbSet<UserState> UsersStates { get; set; }
 
-    //public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
+    public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         optionsBuilder.UseNpgsql("Host=localhost;Port=5432;Database=Web8Base;Username=postgres;Password=mypassword");
@@ -48,6 +48,17 @@ public class AppDbContext : DbContext
                 UserStateId = 2,
                 UserStateCode = UserStateCode.Blocked,
                 Description = "Blocked account"
+            });
+
+        modelBuilder.Entity<User>().HasData(
+            new User
+            {
+                Id = 1,
+                Login = "Admin",
+                PasswordHash = "$2a$11$oJPCZ2OPD9Fi5CACy/F01.BBYkIh8lB9nGtOVmUHmvtKf7HdsI.hS",
+                CreatedDate = DateTime.SpecifyKind(DateTime.Parse("2020-01-01"), DateTimeKind.Utc),
+                UserGroupId = 1,
+                UserStateId = 1,
             });
     }
 }

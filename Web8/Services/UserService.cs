@@ -12,110 +12,113 @@ public class UserService : IUserService
 {
     private readonly AppDbContext context;
     private readonly IPasswordHasher passwordHasher;
-    private readonly IHttpContextAccessor httpContextAccessor;
     private static readonly ConcurrentDictionary<string, bool> pendingLogins = new();
-    public UserService(AppDbContext context, IPasswordHasher passwordHasher, IHttpContextAccessor httpContextAccessor)
+    public UserService(AppDbContext context, IPasswordHasher passwordHasher)
     {
         this.context = context;
         this.passwordHasher = passwordHasher;
-        this.httpContextAccessor = httpContextAccessor;
     }
 
     public async Task CreateUserAsync(CreateUserRequest request)
     {
-
-
         if (!pendingLogins.TryAdd(request.Login, true))
-            throw new Exception("This Login is already being register");
+            throw new ArgumentException("This Login is already being register");
 
-        if (request.UserGroupId is (int)UserGroupCode.Admin)
+        try
         {
-           bool adminExist =  await context.Users
-                .AnyAsync(u=> u.UserGroup.UserGroupCode == UserGroupCode.Admin);
+            if (await context.Users.AnyAsync(u => u.Login == request.Login))
+                throw new ArgumentException("This Login exists");
 
-            if (adminExist)
-                throw new Exception("Admin Exists");
+            if (request.UserGroupId is (int)UserGroupCode.Admin)
+            {
+                bool adminExist = await context.Users
+                     .AnyAsync(u => u.UserGroup.UserGroupCode == UserGroupCode.Admin);
+
+                if (adminExist)
+                    throw new ArgumentException("Admin exists");
+            }
+
+            await Task.Delay(5000);
+
+            var user = new User 
+            {
+                Login = request.Login,
+                PasswordHash = passwordHasher.Generate(request.Password),
+                CreatedDate = DateTime.UtcNow,
+                UserGroupId = request.UserGroupId,
+                UserStateId = (int)UserStateCode.Active
+            };
+
+            await context.Users.AddAsync(user);
+            await context.SaveChangesAsync();
         }
 
-        await Task.Delay(5000);
-
-        if (await context.Users.AnyAsync(u=>u.Login == request.Login))
-            throw new Exception("This Login exists");
-
-        var hashedPassword = passwordHasher.Generate(request.Password);
-
-        await context.Users.AddAsync(new User
+        finally 
         {
-            Id = new Guid(),
-            Login = request.Login,
-            PasswordHash = hashedPassword,
-            CreatedDate = DateTime.UtcNow,
-            UserGroupId = request.UserGroupId,
-            UserStateId = (int)UserStateCode.Active,
-        });
-
-        await context.SaveChangesAsync();
-
-        pendingLogins.TryRemove(request.Login, out _);
+            pendingLogins.TryRemove(request.Login, out _);
+        }
     }
-    public async Task BlockUserAsync(Guid id)
+    public async Task BlockUserAsync(int id)
     {
         var user = await context.Users.FirstOrDefaultAsync(x => x.Id == id);
 
         if (user is null)
             throw new KeyNotFoundException($"User {id} not found");
- 
+
+        if (user.UserStateId == (int)UserStateCode.Blocked)
+            throw new KeyNotFoundException($"User {id} already blocked");
+
         user.UserStateId = (int)UserStateCode.Blocked;
         await context.SaveChangesAsync();
     }
-    public async Task<UserResponse> GetUserAsync(Guid id)
+    public async Task<UserResponse> GetUserAsync(int id)
     {
         var user = await context.Users
-            .Where(u => u.Id == id)
-            .Select(u => new UserResponse
-            {
-                UserId = u.Id,
-                Login = u.Login,
-                UserGroup = new UserGroupResponce
-                {
-                    UserGroupId = u.UserGroup.UserGroupId,
-                    UserGroupCode = u.UserGroup.UserGroupCode.ToString(),
-                    Description = u.UserGroup.Description
-                },
-                UserState = new UserStateResponse
-                {
-                    UserStateId = u.UserState.UserStateId,
-                    UserStateCode = u.UserState.UserStateCode.ToString(),
-                    Description= u.UserState.Description
-                },
-                CreatedDate = u.CreatedDate
-            })
-            .FirstOrDefaultAsync();
+            .Include(u => u.UserGroup)
+            .Include(u => u.UserState)
+            .FirstOrDefaultAsync(x=> x.Id == id);
 
-        return user 
-            ?? throw new KeyNotFoundException($"User {id} not found");   
+        if (user is null)
+            throw new KeyNotFoundException($"User {id} not found!");
+
+        return MapToResponce(user);
     }
     public async Task<List<UserResponse>> GetAllUsersAsync()
     {
-        return await context.Users
-            .Select(u => new UserResponse
-            {
-                UserId = u.Id,
-                Login = u.Login,
-                UserGroup = new UserGroupResponce
-                {
-                    UserGroupId = u.UserGroup.UserGroupId,
-                    UserGroupCode = u.UserGroup.UserGroupCode.ToString(),
-                    Description = u.UserGroup.Description
-                },
-                UserState = new UserStateResponse
-                {
-                    UserStateId = u.UserState.UserStateId,
-                    UserStateCode = u.UserState.UserStateCode.ToString(),
-                    Description = u.UserState.Description
-                },
-                CreatedDate = u.CreatedDate
-            })
+        var result = await context.Users
+            .Include(u => u.UserGroup)
+            .Include(u => u.UserState)
             .ToListAsync();
+
+        return result
+            .Select(MapToResponce)
+            .ToList();
     }
+
+    private static UserResponse MapToResponce(User user) => new() 
+    {
+        UserId = user.Id,
+        Login = user.Login,
+        UserGroup = new UserGroupResponce
+        {
+            UserGroupId = user.UserGroup.UserGroupId,
+            UserGroupCode = user.UserGroup.UserGroupCode,
+            Description = user.UserGroup.Description
+        },
+        UserState = new UserStateResponse
+        {
+            UserStateId = user.UserState.UserStateId,
+            UserStateCode = user.UserState.UserStateCode,
+            Description = user.UserState.Description
+        },
+        CreatedDate = user.CreatedDate
+    };
 }
+
+//public record OperationResult (bool IsSuccess, string? Error = null, int? ErrorCode = null)
+//{
+//    public static OperationResult Success() 
+//        => new(true);
+//    public static OperationResult Fail(string error, int errorCode) 
+//        => new(false, error, errorCode);
+//}

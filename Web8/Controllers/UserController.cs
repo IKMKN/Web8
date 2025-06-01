@@ -17,36 +17,34 @@ namespace Web8.Controllers
             this.userService = userService;
         }
 
-        
         [HttpGet("GetUserById/{id}")]
-        public async Task<IResult> GetUserByIdAsync(Guid id)
+        public async Task<IActionResult> GetUserByIdAsync(int id)
         {
             var result = await userService.GetUserAsync(id);
-            return Results.Ok(result);
+            return Ok(result);
         }
 
-       
         [HttpGet("GetAllUsers")]
-        public async Task<IResult> GetUsersAsync()
+        public async Task<IActionResult> GetUsersAsync()
         {
             var result = await userService.GetAllUsersAsync();
-            return Results.Ok(result);
+            return Ok(result);
         }
 
         [Authorize(Policy = "AdminPolicy")]
         [HttpPost("AddUser")]
-        public async Task<IResult> AddUserAsync(CreateUserRequest request)
+        public async Task<IActionResult> AddUserAsync(CreateUserRequest request)
         {
             await userService.CreateUserAsync(request);
-            return Results.Created();
+            return Ok();
         }
 
         [Authorize(Policy = "AdminPolicy")]
-        [HttpDelete("{id}")]
-        public async Task<IResult> DeleteUser(Guid id)
+        [HttpDelete("BlockUserById/{id}")]
+        public async Task<IActionResult> BlockUser(int id)
         {
             await userService.BlockUserAsync(id);
-            return Results.NoContent();
+            return NoContent();
         }
     }
 }

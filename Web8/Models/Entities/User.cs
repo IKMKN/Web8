@@ -1,8 +1,13 @@
-﻿namespace Web8.Models.Entities;
+﻿using System.ComponentModel.DataAnnotations.Schema;
+using System.ComponentModel.DataAnnotations;
+
+namespace Web8.Models.Entities;
 
 public class User
 {
-    public Guid Id { get; set; }
+    [Key]
+    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+    public int Id { get; set; }
     public string Login { get; set; }
     public string PasswordHash { get; set; }
     public DateTime CreatedDate { get; set; }
