@@ -23,7 +23,7 @@ public class AuthService : IAuthService
         var user = await context.Users.FirstOrDefaultAsync(u => u.Login == login) 
             ?? throw new KeyNotFoundException("This login not exist!");
 
-        if (user.UserStateId == (int)UserStateCode.Blocked)
+        if (user.UserStateId is (int)UserStateCode.Blocked)
             throw new ArgumentException($"Account {user.Login} is blocked!");
 
         var result = passwordHasher.Verify(password, user.PasswordHash);
