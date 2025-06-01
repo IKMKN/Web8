@@ -65,8 +65,11 @@ public class UserService : IUserService
         if (user is null)
             throw new KeyNotFoundException($"User {id} not found");
 
-        if (user.UserStateId == (int)UserStateCode.Blocked)
+        if (user.UserStateId is (int)UserStateCode.Blocked)
             throw new KeyNotFoundException($"User {id} already blocked");
+
+        if (user.UserGroupId is (int)UserGroupCode.Admin)
+            throw new ArgumentException($"Admin cannot be blocked!");
 
         user.UserStateId = (int)UserStateCode.Blocked;
         await context.SaveChangesAsync();
