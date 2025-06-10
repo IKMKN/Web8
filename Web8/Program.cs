@@ -11,7 +11,8 @@ var builder = WebApplication.CreateBuilder(args);
 var configuration = builder.Configuration;
 
 builder.Services.Configure<JwtOptions>(configuration.GetSection(nameof(JwtOptions)));
-builder.Services.AddApiAuthentication(builder.Services.BuildServiceProvider().GetRequiredService<IOptions<JwtOptions>>());
+builder.Services.AddApiAuthentication(builder.Services.BuildServiceProvider()
+    .GetRequiredService<IOptions<JwtOptions>>());
 
 builder.Services.AddControllers()
     .AddJsonOptions(options =>
@@ -19,7 +20,6 @@ builder.Services.AddControllers()
         options.JsonSerializerOptions.DefaultIgnoreCondition = 
             JsonIgnoreCondition.WhenWritingNull;
     });
-
 
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IAuthService, AuthService>();

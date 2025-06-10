@@ -1,7 +1,5 @@
 ﻿using Web8.Models.Requests;
 using Web8.Models.Responses;
-using Web8.Services;
-
 namespace Web8.Interfaces;
 
 public interface IUserService

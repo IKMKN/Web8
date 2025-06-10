@@ -14,7 +14,7 @@ public static class ApiExtensions
     {
         services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             .AddJwtBearer(JwtBearerDefaults.AuthenticationScheme, options =>
-            {
+            {                
                 options.TokenValidationParameters = new()
                 {
                     ValidateIssuer = false,
@@ -43,5 +43,4 @@ public static class ApiExtensions
             });
         });
     }
-
 }

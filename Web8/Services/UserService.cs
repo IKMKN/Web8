@@ -98,7 +98,7 @@ public class UserService : IUserService
             .ToList();
     }
 
-    private static UserResponse MapToResponce(User user) => new() 
+    private static UserResponse MapToResponce(User user) => new()
     {
         UserId = user.Id,
         Login = user.Login,
