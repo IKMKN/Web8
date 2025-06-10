@@ -13,7 +13,7 @@ public static class ApiExtensions
         IOptions<JwtOptions> jwtOptions) 
     {
         services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-            .AddJwtBearer(JwtBearerDefaults.AuthenticationScheme, options=>
+            .AddJwtBearer(JwtBearerDefaults.AuthenticationScheme, options =>
             {
                 options.TokenValidationParameters = new()
                 {
