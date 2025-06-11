@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using System.Configuration;
 using Web8.Data.Configurations;
 using Web8.Models.Entities;
 
@@ -11,10 +12,6 @@ public class AppDbContext : DbContext
     public DbSet<UserState> UsersStates { get; set; }
 
     public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-    {
-        optionsBuilder.UseNpgsql("Host=localhost;Port=5432;Database=Web8Base;Username=postgres;Password=mypassword");
-    }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

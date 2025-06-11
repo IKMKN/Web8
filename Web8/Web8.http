@@ -1,6 +1,6 @@
 @Web8_HostAddress = http://localhost:5045
 
-GET {{Web8_HostAddress}}/weatherforecast/
+GET {{Web8_HostAddress}}/Web8/
 Accept: application/json
 
 ###
