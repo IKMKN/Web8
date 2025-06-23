@@ -4,8 +4,8 @@ namespace Web8.Interfaces;
 
 public interface IUserService
 {
-    Task BlockUserAsync(int id);
+    Task BlockUserAsync(long id);
     Task CreateUserAsync(CreateUserRequest request);
     Task<List<UserResponse>> GetAllUsersAsync();
-    Task<UserResponse> GetUserAsync(int id);
+    Task<UserResponse> GetUserAsync(long id);
 }

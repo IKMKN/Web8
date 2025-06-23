@@ -18,7 +18,7 @@ namespace Web8.Controllers
         }
 
         [HttpGet("GetUserById/{id}")]
-        public async Task<IActionResult> GetUserByIdAsync(int id)
+        public async Task<IActionResult> GetUserByIdAsync(long id)
         {
             var result = await userService.GetUserAsync(id);
             return Ok(result);
@@ -41,10 +41,10 @@ namespace Web8.Controllers
 
         [Authorize(Policy = "AdminPolicy")]
         [HttpDelete("BlockUserById/{id}")]
-        public async Task<IActionResult> BlockUser(int id)
+        public async Task<IActionResult> SoftDeleteUserAsync(int id)
         {
             await userService.BlockUserAsync(id);
-            return NoContent();
+            return Ok();
         }
     }
 }

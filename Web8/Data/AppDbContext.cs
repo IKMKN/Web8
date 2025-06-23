@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System.Configuration;
 using Web8.Data.Configurations;
 using Web8.Models.Entities;
+using Web8.Models.Enums;
 
 namespace Web8.Data;
 

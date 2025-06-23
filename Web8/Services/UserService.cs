@@ -3,6 +3,7 @@ using System.Collections.Concurrent;
 using Web8.Data;
 using Web8.Interfaces;
 using Web8.Models.Entities;
+using Web8.Models.Enums;
 using Web8.Models.Requests;
 using Web8.Models.Responses;
 
@@ -58,7 +59,7 @@ public class UserService : IUserService
             pendingLogins.TryRemove(request.Login, out _);
         }
     }
-    public async Task BlockUserAsync(int id)
+    public async Task BlockUserAsync(long id)
     {
         var user = await context.Users.FirstOrDefaultAsync(x => x.Id == id);
 
@@ -74,7 +75,7 @@ public class UserService : IUserService
         user.UserStateId = (int)UserStateCode.Blocked;
         await context.SaveChangesAsync();
     }
-    public async Task<UserResponse> GetUserAsync(int id)
+    public async Task<UserResponse> GetUserAsync(long id)
     {
         var user = await context.Users
             .Include(u => u.UserGroup)
@@ -105,13 +106,13 @@ public class UserService : IUserService
         UserGroup = new UserGroupResponce
         {
             UserGroupId = user.UserGroup.UserGroupId,
-            UserGroupCode = user.UserGroup.UserGroupCode,
+            UserGroupCode = user.UserGroup.UserGroupCode.ToString(),
             Description = user.UserGroup.Description
         },
         UserState = new UserStateResponse
         {
             UserStateId = user.UserState.UserStateId,
-            UserStateCode = user.UserState.UserStateCode,
+            UserStateCode = user.UserState.UserStateCode.ToString(),
             Description = user.UserState.Description
         },
         CreatedDate = user.CreatedDate
