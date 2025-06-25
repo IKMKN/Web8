@@ -363,3 +363,9 @@ MigrationBackup/
 FodyWeavers.xsd
 /Web8/Migrations
 /Dockerfile
+/DataAccess/Migrations/20250623122307_initial.cs
+/DataAccess/Migrations/20250623122819_initial2.cs
+/DataAccess/Migrations/20250625114608_InitialCreate2.cs
+/DataAccess/Migrations/20250625115209_InitialCreate3.cs
+/DataAccess/Migrations/20250625115954_InitialCreate4.cs
+/DataAccess/Migrations/AppDbContextModelSnapshot.cs
