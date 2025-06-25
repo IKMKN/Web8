@@ -1,11 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
-using Microsoft.Extensions.Options;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Microsoft.Extensions.Configuration;
 
 namespace DataAccess;
 
@@ -13,9 +8,14 @@ public class AppDbContextFactory : IDesignTimeDbContextFactory<AppDbContext>
 {
     public AppDbContext CreateDbContext(string[] args)
     {
-        var optionsBuilder = new DbContextOptionsBuilder<AppDbContext>();
+        IConfiguration configuration = new ConfigurationBuilder()
+            .AddUserSecrets<AppDbContextFactory>()
+            .Build();
 
-        optionsBuilder.UseNpgsql("Host=localhost;Port=5432;Database=Web8Base2;Username=postgres;Password=mypassword",
+        var connectionString = configuration.GetConnectionString("DefaultConnection");
+
+        var optionsBuilder = new DbContextOptionsBuilder<AppDbContext>();
+        optionsBuilder.UseNpgsql(connectionString,
         b => b.MigrationsAssembly("DataAccess"));
 
         return new AppDbContext(optionsBuilder.Options);
