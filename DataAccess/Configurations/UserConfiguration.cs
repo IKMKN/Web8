@@ -24,15 +24,14 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
             .HasOne(u => u.UserState)
             .WithMany(s => s.Users)
             .HasForeignKey(u => u.UserStateId);
-
-        var now = DateTime.UtcNow;
+  
         builder.HasData(
             new User
             {
                 Id = 1,
                 Login = "Admin",
                 PasswordHash = "$2a$11$oJPCZ2OPD9Fi5CACy/F01.BBYkIh8lB9nGtOVmUHmvtKf7HdsI.hS",
-                CreatedDate = now,
+                CreatedDate = new DateTime(2020, 1, 1, 0, 0, 0, DateTimeKind.Utc),
                 UserGroupId = 1,
                 UserStateId = 1,
             });
