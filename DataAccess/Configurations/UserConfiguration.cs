@@ -2,7 +2,8 @@
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Web8.Models.Entities;
 
-namespace Web8.Data.Configurations;
+
+namespace DataAccess.Configurations;
 
 public class UserConfiguration : IEntityTypeConfiguration<User>
 {
@@ -23,5 +24,17 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
             .HasOne(u => u.UserState)
             .WithMany(s => s.Users)
             .HasForeignKey(u => u.UserStateId);
+
+        var now = DateTime.UtcNow;
+        builder.HasData(
+            new User
+            {
+                Id = 1,
+                Login = "Admin",
+                PasswordHash = "$2a$11$oJPCZ2OPD9Fi5CACy/F01.BBYkIh8lB9nGtOVmUHmvtKf7HdsI.hS",
+                CreatedDate = now,
+                UserGroupId = 1,
+                UserStateId = 1,
+            });
     }
 }

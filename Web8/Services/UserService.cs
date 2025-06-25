@@ -1,6 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using DataAccess;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.Concurrent;
-using Web8.Data;
 using Web8.Interfaces;
 using Web8.Models.Entities;
 using Web8.Models.Enums;
@@ -85,6 +85,9 @@ public class UserService : IUserService
         if (user is null)
             throw new KeyNotFoundException($"User {id} not found!");
 
+        if (user.UserStateId == (int)UserStateCode.Blocked)
+            throw new KeyNotFoundException($"User {id} is blocked!");
+
         return MapToResponce(user);
     }
     public async Task<List<UserResponse>> GetAllUsersAsync()
@@ -92,11 +95,10 @@ public class UserService : IUserService
         var result = await context.Users
             .Include(u => u.UserGroup)
             .Include(u => u.UserState)
+            .Where(u => u.UserStateId == (int)UserStateCode.Active)
             .ToListAsync();
 
-        return result
-            .Select(MapToResponce)
-            .ToList();
+        return [.. result.Select(MapToResponce)];
     }
 
     private static UserResponse MapToResponce(User user) => new()

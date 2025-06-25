@@ -1,7 +1,7 @@
+using DataAccess;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using System.Text.Json.Serialization;
-using Web8.Data;
 using Web8.Extensions;
 using Web8.Interfaces;
 using Web8.Middlewares;

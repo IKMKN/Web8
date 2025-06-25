@@ -1,7 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Web8.Data;
+﻿using DataAccess;
+using Microsoft.EntityFrameworkCore;
 using Web8.Interfaces;
-using Web8.Models.Entities;
 using Web8.Models.Enums;
 
 namespace Web8.Services;
