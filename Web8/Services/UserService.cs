@@ -59,7 +59,7 @@ public class UserService : IUserService
             pendingLogins.TryRemove(request.Login, out _);
         }
     }
-    public async Task BlockUserAsync(long id)
+    public async Task SoftDeleteUserAsync(long id)
     {
         var user = await context.Users.FirstOrDefaultAsync(x => x.Id == id);
 
