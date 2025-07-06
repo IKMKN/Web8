@@ -1,6 +1,6 @@
-﻿using Web8.Interfaces;
+﻿using API.Interfaces;
 
-namespace Web8.Utils;
+namespace API.Utils;
 
 public class PasswordHasher : IPasswordHasher
 {

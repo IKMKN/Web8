@@ -1,9 +1,9 @@
-﻿using DataAccess;
+﻿using API.Interfaces;
+using DataAccess;
+using Domain.Enums;
 using Microsoft.EntityFrameworkCore;
-using Web8.Interfaces;
-using Web8.Models.Enums;
 
-namespace Web8.Services;
+namespace API.Services;
 
 public class AuthService : IAuthService
 {

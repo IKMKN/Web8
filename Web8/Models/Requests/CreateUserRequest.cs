@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Web8.Models.Requests;
+namespace API.Models.Requests;
 
 public class CreateUserRequest
 {

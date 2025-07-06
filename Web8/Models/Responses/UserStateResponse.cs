@@ -1,6 +1,4 @@
-﻿using Web8.Models.Enums;
-
-namespace Web8.Models.Responses;
+﻿namespace API.Models.Responses;
 
 public class UserStateResponse
 {

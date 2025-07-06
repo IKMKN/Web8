@@ -1,12 +1,12 @@
+using API.Extensions;
+using API.Interfaces;
+using API.Middlewares;
+using API.Services;
+using API.Utils;
 using DataAccess;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using System.Text.Json.Serialization;
-using Web8.Extensions;
-using Web8.Interfaces;
-using Web8.Middlewares;
-using Web8.Services;
-using Web8.Utils;
 
 var builder = WebApplication.CreateBuilder(args);
 var configuration = builder.Configuration;
@@ -30,8 +30,7 @@ builder.Services.AddScoped<IPasswordHasher, PasswordHasher>();
 
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseNpgsql(
-        builder.Configuration.GetConnectionString("DefaultConnection"),
-        b => b.MigrationsAssembly("DataAccess"))    
+        builder.Configuration.GetConnectionString("DefaultConnection"))
 );
 
 builder.Services.AddEndpointsApiExplorer();

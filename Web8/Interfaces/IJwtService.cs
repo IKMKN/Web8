@@ -1,6 +1,6 @@
-﻿using Web8.Models.Entities;
+﻿using Domain.Entities;
 
-namespace Web8.Interfaces
+namespace API.Interfaces
 {
     public interface IJwtService
     {

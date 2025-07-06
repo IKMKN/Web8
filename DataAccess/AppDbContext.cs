@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using DataAccess.Configurations;
-using Web8.Models.Entities;
+using Domain.Entities;
 
 namespace DataAccess;
 

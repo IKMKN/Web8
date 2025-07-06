@@ -1,4 +1,4 @@
-﻿namespace Web8.Models.Responses;
+﻿namespace API.Models.Responses;
 
 public class UserResponse
 {

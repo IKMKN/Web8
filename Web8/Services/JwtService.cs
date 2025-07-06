@@ -1,12 +1,12 @@
-﻿using Microsoft.Extensions.Options;
+﻿using API.Interfaces;
+using Domain.Entities;
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
-using Web8.Interfaces;
-using Web8.Models.Entities;
 
-namespace Web8.Services;
+namespace API.Services;
 
 public class JwtService : IJwtService
 {

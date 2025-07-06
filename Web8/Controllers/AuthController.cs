@@ -1,10 +1,8 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
+﻿using API.Interfaces;
+using API.Models.Requests;
 using Microsoft.AspNetCore.Mvc;
-using Web8.Interfaces;
-using Web8.Models.Requests;
 
-namespace Web8.Controllers;
+namespace API.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]

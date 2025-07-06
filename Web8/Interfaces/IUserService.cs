@@ -1,6 +1,7 @@
-﻿using Web8.Models.Requests;
-using Web8.Models.Responses;
-namespace Web8.Interfaces;
+﻿using API.Models.Requests;
+using API.Models.Responses;
+
+namespace API.Interfaces;
 
 public interface IUserService
 {

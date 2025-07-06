@@ -1,4 +1,4 @@
-﻿namespace Web8.Services;
+﻿namespace API.Services;
 
 public class JwtOptions
 {

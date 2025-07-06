@@ -1,4 +1,4 @@
-﻿namespace Web8.Models.Enums;
+﻿namespace Domain.Enums;
 
 public enum UserStateCode
 {

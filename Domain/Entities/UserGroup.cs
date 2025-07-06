@@ -1,6 +1,6 @@
-﻿using Web8.Models.Enums;
+﻿using Domain.Enums;
 
-namespace Web8.Models.Entities;
+namespace Domain.Entities;
 
 public class UserGroup
 {

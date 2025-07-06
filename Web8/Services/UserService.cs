@@ -1,13 +1,13 @@
-﻿using DataAccess;
+﻿using API.Interfaces;
+using API.Models.Requests;
+using API.Models.Responses;
+using DataAccess;
+using Domain.Entities;
+using Domain.Enums;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Concurrent;
-using Web8.Interfaces;
-using Web8.Models.Entities;
-using Web8.Models.Enums;
-using Web8.Models.Requests;
-using Web8.Models.Responses;
 
-namespace Web8.Services;
+namespace API.Services;
 
 public class UserService : IUserService
 {

@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-namespace Web8.Middlewares;
+namespace API.Middlewares;
 
 public class ExceptionMiddleware
 {

@@ -1,4 +1,4 @@
-﻿namespace Web8.Interfaces;
+﻿namespace API.Interfaces;
 
 public interface IPasswordHasher
 {
