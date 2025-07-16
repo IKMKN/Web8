@@ -31,7 +31,7 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
                 Id = 1,
                 Login = "Admin",
                 PasswordHash = "$2a$11$oJPCZ2OPD9Fi5CACy/F01.BBYkIh8lB9nGtOVmUHmvtKf7HdsI.hS",
-                CreatedDate = new DateTime(2020, 1, 1, 0, 0, 0, DateTimeKind.Utc),
+                CreatedDate = new DateTime(1998, 10, 7, 0, 0, 0, DateTimeKind.Utc),
                 UserGroupId = 1,
                 UserStateId = 1,
             });
