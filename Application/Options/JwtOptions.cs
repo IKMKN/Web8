@@ -1,4 +1,4 @@
-﻿namespace API.Services;
+﻿namespace Application.Options;
 
 public class JwtOptions
 {

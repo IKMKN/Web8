@@ -1,13 +1,14 @@
-﻿using API.Interfaces;
-using API.Models.Requests;
-using API.Models.Responses;
+﻿using Domain.Models.Responses;
 using DataAccess;
 using Domain.Entities;
 using Domain.Enums;
+using Domain.Models.Requests;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Concurrent;
+using Microsoft.Extensions.Logging;
+using Application.Interfaces;
 
-namespace API.Services;
+namespace Application.Services;
 
 public class UserService : IUserService
 {

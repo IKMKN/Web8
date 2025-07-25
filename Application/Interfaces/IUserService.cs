@@ -1,7 +1,7 @@
-﻿using API.Models.Requests;
-using API.Models.Responses;
+﻿using Domain.Models.Responses;
+using Domain.Models.Requests;
 
-namespace API.Interfaces;
+namespace Application.Interfaces;
 
 public interface IUserService
 {

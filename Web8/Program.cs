@@ -1,12 +1,12 @@
 using API.Extensions;
-using API.Interfaces;
+using Application.Interfaces;
 using API.Middlewares;
-using API.Services;
-using API.Utils;
+using Application.Services;
+using Application.Utils;
 using DataAccess;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using System.Text.Json.Serialization;
+using Application.Options;
 
 var builder = WebApplication.CreateBuilder(args);
 var configuration = builder.Configuration;
@@ -28,10 +28,12 @@ builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IJwtService, JwtService>();
 builder.Services.AddScoped<IPasswordHasher, PasswordHasher>();
 
-builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseNpgsql(
-        builder.Configuration.GetConnectionString("DefaultConnection"))
-);
+builder.Services.AddDbContext<AppDbContext>();
+
+//builder.Services.AddDbContext<AppDbContext>(options =>                   //Если всё это есть в фабрике, то зачем дубликатить? Я прав?)
+//    options.UseNpgsql(
+//        builder.Configuration.GetConnectionString("DefaultConnection"), 
+//);
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();

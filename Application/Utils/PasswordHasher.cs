@@ -1,6 +1,6 @@
-﻿using API.Interfaces;
+﻿using Application.Interfaces;
 
-namespace API.Utils;
+namespace Application.Utils;
 
 public class PasswordHasher : IPasswordHasher
 {

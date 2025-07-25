@@ -12,20 +12,20 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace DataAccess.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20250625200736_Initial4")]
-    partial class Initial4
+    [Migration("20250725154418_Initial55")]
+    partial class Initial55
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "9.0.6")
+                .HasAnnotation("ProductVersion", "9.0.7")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("Web8.Models.Entities.User", b =>
+            modelBuilder.Entity("Domain.Entities.User", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -65,7 +65,7 @@ namespace DataAccess.Migrations
                         new
                         {
                             Id = 1L,
-                            CreatedDate = new DateTime(2020, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            CreatedDate = new DateTime(1998, 10, 7, 0, 0, 0, 0, DateTimeKind.Utc),
                             Login = "Admin",
                             PasswordHash = "$2a$11$oJPCZ2OPD9Fi5CACy/F01.BBYkIh8lB9nGtOVmUHmvtKf7HdsI.hS",
                             UserGroupId = 1,
@@ -73,7 +73,7 @@ namespace DataAccess.Migrations
                         });
                 });
 
-            modelBuilder.Entity("Web8.Models.Entities.UserGroup", b =>
+            modelBuilder.Entity("Domain.Entities.UserGroup", b =>
                 {
                     b.Property<int>("UserGroupId")
                         .ValueGeneratedOnAdd()
@@ -108,7 +108,7 @@ namespace DataAccess.Migrations
                         });
                 });
 
-            modelBuilder.Entity("Web8.Models.Entities.UserState", b =>
+            modelBuilder.Entity("Domain.Entities.UserState", b =>
                 {
                     b.Property<int>("UserStateId")
                         .ValueGeneratedOnAdd()
@@ -143,15 +143,15 @@ namespace DataAccess.Migrations
                         });
                 });
 
-            modelBuilder.Entity("Web8.Models.Entities.User", b =>
+            modelBuilder.Entity("Domain.Entities.User", b =>
                 {
-                    b.HasOne("Web8.Models.Entities.UserGroup", "UserGroup")
+                    b.HasOne("Domain.Entities.UserGroup", "UserGroup")
                         .WithMany("Users")
                         .HasForeignKey("UserGroupId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Web8.Models.Entities.UserState", "UserState")
+                    b.HasOne("Domain.Entities.UserState", "UserState")
                         .WithMany("Users")
                         .HasForeignKey("UserStateId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -162,12 +162,12 @@ namespace DataAccess.Migrations
                     b.Navigation("UserState");
                 });
 
-            modelBuilder.Entity("Web8.Models.Entities.UserGroup", b =>
+            modelBuilder.Entity("Domain.Entities.UserGroup", b =>
                 {
                     b.Navigation("Users");
                 });
 
-            modelBuilder.Entity("Web8.Models.Entities.UserState", b =>
+            modelBuilder.Entity("Domain.Entities.UserState", b =>
                 {
                     b.Navigation("Users");
                 });

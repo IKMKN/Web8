@@ -1,4 +1,4 @@
-﻿namespace API.Models.Responses;
+﻿namespace Domain.Models.Responses;
 
 public class UserResponse
 {

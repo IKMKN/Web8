@@ -1,9 +1,10 @@
-﻿using API.Interfaces;
-using DataAccess;
+﻿using DataAccess;
 using Domain.Enums;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
+using Application.Interfaces;
 
-namespace API.Services;
+namespace Application.Services;
 
 public class AuthService : IAuthService
 {

@@ -4,7 +4,7 @@ using Microsoft.Extensions.Configuration;
 
 namespace DataAccess;
 
-public class AppDbContextFactory : IDesignTimeDbContextFactory<AppDbContext>
+public class AppDbContextFactory : IDesignTimeDbContextFactory<AppDbContext>        //Понять бы как без этого миграции бахать
 {
     public AppDbContext CreateDbContext(string[] args)
     {
