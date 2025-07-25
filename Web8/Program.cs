@@ -7,6 +7,7 @@ using DataAccess;
 using Microsoft.Extensions.Options;
 using System.Text.Json.Serialization;
 using Application.Options;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 var configuration = builder.Configuration;
@@ -28,12 +29,10 @@ builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IJwtService, JwtService>();
 builder.Services.AddScoped<IPasswordHasher, PasswordHasher>();
 
-builder.Services.AddDbContext<AppDbContext>();
-
-//builder.Services.AddDbContext<AppDbContext>(options =>                   //Если всё это есть в фабрике, то зачем дубликатить? Я прав?)
-//    options.UseNpgsql(
-//        builder.Configuration.GetConnectionString("DefaultConnection"), 
-//);
+builder.Services.AddDbContext<AppDbContext>(options =>
+    options.UseNpgsql(
+        builder.Configuration.GetConnectionString("DefaultConnection")
+));
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
